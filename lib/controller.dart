@@ -1,6 +1,6 @@
+import 'package:animated_state_widget/widget_state.dart';
 import 'package:flutter/foundation.dart';
 
-enum WidgetState { init, onAction, completed, error }
 
 class AnimatedStateController extends ChangeNotifier {
   WidgetState state = WidgetState.init;
