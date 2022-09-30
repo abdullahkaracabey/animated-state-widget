@@ -1,4 +1,3 @@
-import 'package:animated_state_widget/animated_state_controller.dart';
 import 'package:animated_state_widget/animated_state_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -82,28 +81,29 @@ class _MyHomePageState extends State<MyHomePage> {
               controller: _controllerAppBar,
               // duration: const Duration(seconds: 1),
               child: TextButton(
-                  onPressed: ()=>_onSubmit(_controllerAppBar), child: const Icon(Icons.add, color:Colors.white)),
+                  onPressed: () => _onSubmit(_controllerAppBar),
+                  child: const Icon(Icons.add, color: Colors.white)),
             ),
           ],
         ),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-          
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-            const Expanded(child: Text("Hello World")),
-            Expanded(
-              child: Center(
-                child: AnimatedStateWidget(
-                  controller: _controller,
-                  // duration: const Duration(seconds: 1),
-                  child: ElevatedButton(
-                      onPressed: () => _onSubmit(_controller), child: const Text("Click Me")),
+                const Expanded(child: Text("Hello World")),
+                Expanded(
+                  child: Center(
+                    child: AnimatedStateWidget(
+                      controller: _controller,
+                      // duration: const Duration(seconds: 1),
+                      child: ElevatedButton(
+                          onPressed: () => _onSubmit(_controller),
+                          child: const Text("Click Me")),
+                    ),
+                  ),
                 ),
-              ),
-            ),
               ],
             ),
             AnimatedStateWidget(
@@ -112,7 +112,8 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Container(
                 color: Colors.amber,
                 child: TextButton(
-                    onPressed: () => _onSubmit(_controller), child: const Text("Click Me")),
+                    onPressed: () => _onSubmit(_controller),
+                    child: const Text("Click Me")),
               ),
             ),
           ],
