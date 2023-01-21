@@ -14,7 +14,7 @@ class AnimatedStateWidget extends StatefulWidget {
     Key? key,
     required this.child,
     required this.controller,
-    this.duration = const Duration(milliseconds: 200),
+    this.duration = const Duration(milliseconds: 500),
   }) : super(key: key);
   @override
   AnimatedStateWidgetState createState() => AnimatedStateWidgetState();
@@ -28,15 +28,19 @@ class AnimatedStateWidgetState extends State<AnimatedStateWidget>
 
   @override
   void initState() {
-    SchedulerBinding.instance
-        .addPostFrameCallback((_) => postFrameCallback(context));
+    // SchedulerBinding.instance
+    //     .addPostFrameCallback((_) => postFrameCallback(context));
 
     widget.controller.addListener(_onChangeState);
     super.initState();
   }
 
   _onChangeState() {
-    setState(() {});
+    if (widget.controller.state == WidgetState.onAction) {
+      postFrameCallback(context);
+    } else {
+      setState(() {});
+    }
   }
 
   @override
@@ -79,21 +83,26 @@ class AnimatedStateWidgetState extends State<AnimatedStateWidget>
   }
 
   void postFrameCallback(_) {
-    var context = key.currentContext;
-    if (context == null) {
-      debugPrint("Context is nulll");
-      return;
+    try {
+      var context = key.currentContext;
+      if (context == null) {
+        debugPrint("Context is nulll");
+        return;
+      }
+
+      var newSize = context.size;
+
+      if (newSize != null && _size == null) {
+        debugPrint(
+            "Container ${key.toString()} Size ${newSize?.height} * ${newSize?.width}");
+
+        _size = newSize;
+      }
+
+      setState(() {});
+    } catch (e) {
+      debugPrint("Error on postFrameCallback $e");
     }
-
-    var newSize = context.size;
-    debugPrint(
-        "Container ${key.toString()} Size ${newSize?.height} * ${newSize?.width}");
-
-    if (newSize != null && _size == null) {
-      _size = newSize;
-    }
-
-    setState(() {});
   }
 
   @override
@@ -114,6 +123,7 @@ class AnimatedStateWidgetState extends State<AnimatedStateWidget>
       case WidgetState.completed:
       case WidgetState.onAction:
         color = colorScheme.primary;
+        // color = Colors.red;
         break;
       // case WidgetState.error:
       //   color = colorScheme.error;
@@ -125,7 +135,7 @@ class AnimatedStateWidgetState extends State<AnimatedStateWidget>
     return AnimatedContainer(
         padding: EdgeInsets.zero,
         key: key,
-        clipBehavior: Clip.antiAlias,
+        clipBehavior: Clip.hardEdge,
         decoration: BoxDecoration(
             color: color,
             borderRadius: BorderRadius.circular(
