@@ -1,37 +1,51 @@
 import 'package:animated_state_widget/widget_state.dart';
 import 'package:flutter/foundation.dart';
 
-
 class AnimatedStateController extends ChangeNotifier {
-  WidgetState state = WidgetState.init;
+  WidgetState _state = WidgetState.init;
+  WidgetState get state => _state;
 
   AnimatedStateController();
 
   void start() {
-    if (state != WidgetState.onAction) {
-      state = WidgetState.onAction;
+    if (_state != WidgetState.onAction) {
+      _state = WidgetState.onAction;
       notifyListeners();
     }
   }
 
-  void done() {
-    if (state != WidgetState.completed) {
-      state = WidgetState.completed;
+  void done({Duration? revertDuration}) {
+    if (_state != WidgetState.completed) {
+      _state = WidgetState.completed;
       notifyListeners();
+
+      if (revertDuration != null) {
+        Future.delayed(revertDuration, () {
+          _state = WidgetState.init;
+          notifyListeners();
+        });
+      }
     }
   }
 
   void init() {
-    if (state != WidgetState.init) {
-      state = WidgetState.init;
+    if (_state != WidgetState.init) {
+      _state = WidgetState.init;
       notifyListeners();
     }
   }
 
-  void error() {
-    if (state != WidgetState.error) {
-      state = WidgetState.error;
+  void error({Duration? revertDuration}) {
+    if (_state != WidgetState.error) {
+      _state = WidgetState.error;
       notifyListeners();
+
+      if (revertDuration != null) {
+        Future.delayed(revertDuration, () {
+          _state = WidgetState.init;
+          notifyListeners();
+        });
+      }
     }
   }
 }
