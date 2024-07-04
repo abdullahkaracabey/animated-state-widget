@@ -2,8 +2,7 @@ library animated_state_widget;
 
 import 'package:animated_state_widget/controller.dart';
 import 'package:animated_state_widget/widget_state.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
+import 'package:flutter/material.dart' hide WidgetState;
 
 class AnimatedStateWidget extends StatefulWidget {
   final Widget child;
@@ -94,7 +93,7 @@ class AnimatedStateWidgetState extends State<AnimatedStateWidget>
 
       if (newSize != null && _size == null) {
         debugPrint(
-            "Container ${key.toString()} Size ${newSize?.height} * ${newSize?.width}");
+            "Container ${key.toString()} Size ${newSize.height} * ${newSize.width}");
 
         _size = newSize;
       }
