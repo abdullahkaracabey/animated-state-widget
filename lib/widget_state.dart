@@ -1,1 +1,1 @@
-enum WidgetState { init, onAction, completed, error }
+enum AnimatedWidgetState { init, onAction, completed, error }

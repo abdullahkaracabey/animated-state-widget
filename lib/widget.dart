@@ -2,7 +2,7 @@ library animated_state_widget;
 
 import 'package:animated_state_widget/controller.dart';
 import 'package:animated_state_widget/widget_state.dart';
-import 'package:flutter/material.dart' hide WidgetState;
+import 'package:flutter/material.dart';
 
 class AnimatedStateWidget extends StatefulWidget {
   final Widget child;
@@ -35,7 +35,7 @@ class AnimatedStateWidgetState extends State<AnimatedStateWidget>
   }
 
   _onChangeState() {
-    if (widget.controller.state == WidgetState.onAction) {
+    if (widget.controller.state == AnimatedWidgetState.onAction) {
       postFrameCallback(context);
     } else {
       setState(() {});
@@ -54,11 +54,11 @@ class AnimatedStateWidgetState extends State<AnimatedStateWidget>
     Widget content;
 
     switch (widget.controller.state) {
-      case WidgetState.completed:
+      case AnimatedWidgetState.completed:
         color = colorScheme.primary;
         content = const Icon(Icons.done, color: Colors.white);
         break;
-      case WidgetState.error:
+      case AnimatedWidgetState.error:
         color = colorScheme.error;
         content = const Icon(Icons.error, color: Colors.white);
         break;
@@ -110,17 +110,18 @@ class AnimatedStateWidgetState extends State<AnimatedStateWidget>
 
     final buttonWidth = _size?.width;
 
-    final isInit = isAnimating || widget.controller.state == WidgetState.init;
+    final isInit =
+        isAnimating || widget.controller.state == AnimatedWidgetState.init;
 
     Color? color;
     // Widget content;
 
     switch (widget.controller.state) {
-      case WidgetState.init:
+      case AnimatedWidgetState.init:
         color = Colors.transparent;
         break;
-      case WidgetState.completed:
-      case WidgetState.onAction:
+      case AnimatedWidgetState.completed:
+      case AnimatedWidgetState.onAction:
         color = colorScheme.primary;
         // color = Colors.red;
         break;
@@ -138,14 +139,14 @@ class AnimatedStateWidgetState extends State<AnimatedStateWidget>
         decoration: BoxDecoration(
             color: color,
             borderRadius: BorderRadius.circular(
-                widget.controller.state == WidgetState.init
+                widget.controller.state == AnimatedWidgetState.init
                     ? 0
                     : _size?.height ?? 70)),
         duration: widget.duration,
         onEnd: () => setState(() {
               isAnimating = !isAnimating;
             }),
-        width: widget.controller.state == WidgetState.init
+        width: widget.controller.state == AnimatedWidgetState.init
             ? buttonWidth
             : _size?.height ?? 70,
         height: _size?.height,
@@ -154,7 +155,7 @@ class AnimatedStateWidgetState extends State<AnimatedStateWidget>
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
             children: [
-              widget.controller.state == WidgetState.init
+              widget.controller.state == AnimatedWidgetState.init
                   ? widget.child
                   : circularContainer()
             ]));

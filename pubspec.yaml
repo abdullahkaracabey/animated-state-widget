@@ -1,7 +1,6 @@
 name: animated_state_widget
 description: An animated state widget for asynchronous actions.
 version: 0.1.0
-homepage:
 
 environment:
   sdk: ">=2.17.6 <3.0.0"
@@ -20,7 +19,7 @@ dev_dependencies:
 # following page: https://dart.dev/tools/pub/pubspec
 
 # The following section is specific to Flutter packages.
-flutter:
+# flutter:
 
   # To add assets to your package, add an assets section, like this:
   # assets:
